@@ -1,5 +1,6 @@
-E-Commerce Customer Behavior Analysis
-Project Overview
+## E-Commerce Customer Behavior Analysis
+
+### Project Overview
 
 This project analyzes an e-commerce customer dataset to understand user behavior, engagement patterns, and churn trends. The goal was to clean the data, handle missing values properly, and perform exploratory analysis to identify meaningful business insights.
 
@@ -8,183 +9,149 @@ The dataset was obtained from Kaggle and contains 50,000 customer records with d
 Kaggle Dataset:
 https://www.kaggle.com/datasets/dhairyajeetsingh/ecommerce-customer-behavior-dataset
 
-Objectives
+### Objectives
 
-Clean and preprocess the dataset
+- `Clean and preprocess the dataset`
 
-Handle missing values using logical and data-driven decisions
+- `Handle missing values using logical and data-driven decisions`
 
-Analyze customer engagement behavior
+- `Analyze customer engagement behavior`
 
-Explore churn-related patterns
+- `Explore churn-related patterns`
 
-Understand customer value metrics
+- `Understand customer value metrics`
 
-Dataset Description
+### Dataset Description
 
-The dataset includes the following categories of variables:
+The dataset includes the following categories of variables:-
 
-Demographic Features
+- `Demographic Features`
 
-Age
+- `Age`
 
-Gender
+- `Gender`
 
-Country
+- `Country`
 
-City
+- `City`
 
-Engagement & Activity Metrics
+- `Engagement & Activity Metrics`
 
-Login_Frequency
+- `Login_Frequency`
 
-Session_Duration_Avg
+- `Session_Duration_Avg`
 
-Pages_Per_Session
+- `Pages_Per_Session`
 
-Cart_Abandonment_Rate
+- `Cart_Abandonment_Rate`
 
-Wishlist_Items
+- `Wishlist_Items`
 
-Email_Open_Rate
+- `Email_Open_Rate`
 
-Social_Media_Engagement_Score
+- `Social_Media_Engagement_Score`
 
-Mobile_App_Usage
+- `Mobile_App_Usage`
 
-Product_Reviews_Written
+- `Product_Reviews_Written`
 
-Purchase & Financial Metrics
+- `Purchase & Financial Metrics`
 
-Total_Purchases
+- `Total_Purchases`
 
-Average_Order_Value
+- `Average_Order_Value`
 
-Days_Since_Last_Purchase
+- `Days_Since_Last_Purchase`
 
-Discount_Usage_Rate
+- `Discount_Usage_Rate`
 
-Returns_Rate
+- `Returns_Rate`
 
-Lifetime_Value
+- `Lifetime_Value`
 
-Credit_Balance
+- `Credit_Balance`
 
-Other Features
+Other Features:-
 
-Membership_Years
+- `Membership_Years`
 
-Customer_Service_Calls
+- `Customer_Service_Calls`
 
-Payment_Method_Diversity
+- `Payment_Method_Diversity`
 
-Signup_Quarter
+- `Signup_Quarter`
 
-Churned
+- `Churned`
 
-Data Cleaning & Preprocessing
+### Data Cleaning & Preprocessing
 <table> <thead> <tr> <th align="left">Column</th> <th align="center">Missing %</th> <th align="center">Imputation Strategy</th> <th align="left">Business Reasoning</th> </tr> </thead> <tbody> <tr> <td><strong>Session_Duration_Avg</strong></td> <td align="center">~</td> <td align="center">Median</td> <td>Likely tracking issue; median preserves distribution</td> </tr> <tr> <td><strong>Pages_Per_Session</strong></td> <td align="center">6%</td> <td align="center">Median</td> <td>True missing values; avoids skew from extreme values</td> </tr> <tr> <td><strong>Wishlist_Items</strong></td> <td align="center">~</td> <td align="center">Median</td> <td>0 represents valid behavior; missing treated separately</td> </tr> <tr> <td><strong>Social_Media_Engagement_Score</strong></td> <td align="center">12%</td> <td align="center">Median + Missing Indicator</td> <td>0 is valid; missing not clearly behavioral</td> </tr> <tr> <td><strong>Mobile_App_Usage</strong></td> <td align="center">10%</td> <td align="center">Replaced with 0</td> <td>Likely web-only users; 0 = no app usage</td> </tr> <tr> <td><strong>Credit_Balance</strong></td> <td align="center">11%</td> <td align="center">Replaced with 0</td> <td>0 represents no available credit</td> </tr> <tr> <td><strong>Days_Since_Last_Purchase</strong></td> <td align="center">~</td> <td align="center">Median</td> <td>Data inconsistency despite purchase activity</td> </tr> <tr> <td><strong>Email_Open_Rate</strong></td> <td align="center">5%</td> <td align="center">Median</td> <td>Likely email tracking gaps</td> </tr> </tbody> </table>
 
 Several columns contained missing values. Instead of applying a single blanket method, each column was handled based on business meaning.
 
-1. Session_Duration_Avg
+- **Session_Duration_Avg** - Missing values were likely due to tracking issues (other engagement fields were filled). Replaced using median imputation to preserve distribution.
 
-Missing values were likely due to tracking issues (other engagement fields were filled).
+- **Pages_Per_Session** - Approximately 6% missing. Replaced using median.
 
-Replaced using median imputation to preserve distribution.
+- **Wishlist_Items** -Contained valid 0 values along with missing entries. Missing values replaced using median, since 0 represents real behavior.
 
-2. Pages_Per_Session
+- **Social_Media_Engagement_Score** -12% missing. Used median imputation. Considered creating a missing indicator variable since 0 is a valid score.
 
-Approximately 6% missing.
+- **Mobile_App_Usage** - 10% missing. Replaced missing values with 0 (likely web-only users).
 
-Replaced using median.
+- **Credit_Balance** -11% missing. Replaced missing values with 0 (0 = no available credit).
 
-3. Wishlist_Items
+- **Days_Since_Last_Purchase** - Missing values occurred despite recorded purchase activity. Treated as data inconsistency and replaced using median.
 
-Contained valid 0 values along with missing entries.
+- **Email_Open_Rate** -5% missing. Replaced using median (likely tracking gaps).
 
-Missing values replaced using median, since 0 represents real behavior.
+### Exploratory Data Analysis (EDA)
 
-4. Social_Media_Engagement_Score
+- Pivot tables were created to compare churned (1) and active (0) users across engagement, purchasing behavior, demographics, and geography.
 
-12% missing.
+- The Churned column was used as the primary target variable to identify behavioral changes before customers leave the platform and to determine retention priorities.
 
-Used median imputation.
+### Areas of Analysis
 
-Considered creating a missing indicator variable since 0 is a valid score.
+- Engagement behavior comparison (session duration, login frequency, browsing depth, email engagement, social engagement)
 
-5. Mobile_App_Usage
+- Purchasing behavior trends (purchase frequency, order value, recency, cart abandonment, discount usage)
 
-10% missing.
+- Demographic segmentation (gender and age distribution)
 
-Replaced missing values with 0 (likely web-only users).
+- Geographic segmentation (country-level churn exposure)
 
-6. Credit_Balance
+- Data quality transparency using derived variable Social_Score_Missing
 
-11% missing.
+### Key Insights
 
-Replaced missing values with 0 (0 = no available credit).
+- Churned customers showed consistently lower login frequency, session duration, and pages per session, indicating early disengagement.
 
-7. Days_Since_Last_Purchase
+- Higher Days_Since_Last_Purchase strongly aligned with churn risk, confirming recency as a major predictor.
 
-Missing values occurred despite recorded purchase activity.
+- Churned users had lower total purchases, reducing overall revenue contribution.
 
-Treated as data inconsistency and replaced using median.
+- Higher cart abandonment rates and heavy discount dependency were linked to high-risk segments.
 
-8. Email_Open_Rate
+- Lower email open rates and social media engagement scores signaled weakening brand connection.
 
-5% missing.
+- Certain geographic regions showed higher churn exposure, helping prioritize retention strategies.
 
-Replaced using median (likely tracking gaps).
+### Tools Used
 
-Exploratory Data Analysis (EDA)
+- `Excel / Google Sheets (data cleaning and pivot analysis)`
 
-Pivot tables were created to compare churned (1) and active (0) users across engagement, purchasing behavior, demographics, and geography.
+- `Median imputation techniques`
 
-The Churned column was used as the primary target variable to identify behavioral changes before customers leave the platform and to determine retention priorities.
+- `Exploratory data analysis methods`
 
-Areas of Analysis
+### Learning Outcomes
 
-Engagement behavior comparison (session duration, login frequency, browsing depth, email engagement, social engagement)
+- Applied logical, business-driven missing value handling
 
-Purchasing behavior trends (purchase frequency, order value, recency, cart abandonment, discount usage)
+- Understood the importance of domain knowledge before preprocessing
 
-Demographic segmentation (gender and age distribution)
+- Evaluated how imputation impacts analysis quality
 
-Geographic segmentation (country-level churn exposure)
+- Identified engagement patterns linked to churn
 
-Data quality transparency using derived variable Social_Score_Missing
-
-Key Insights
-
-Churned customers showed consistently lower login frequency, session duration, and pages per session, indicating early disengagement.
-
-Higher Days_Since_Last_Purchase strongly aligned with churn risk, confirming recency as a major predictor.
-
-Churned users had lower total purchases, reducing overall revenue contribution.
-
-Higher cart abandonment rates and heavy discount dependency were linked to high-risk segments.
-
-Lower email open rates and social media engagement scores signaled weakening brand connection.
-
-Certain geographic regions showed higher churn exposure, helping prioritize retention strategies.
-
-Tools Used
-
-Excel / Google Sheets (data cleaning and pivot analysis)
-
-Median imputation techniques
-
-Exploratory data analysis methods
-
-Learning Outcomes
-
-Applied logical, business-driven missing value handling
-
-Understood the importance of domain knowledge before preprocessing
-
-Evaluated how imputation impacts analysis quality
-
-Identified engagement patterns linked to churn
-
-Structured and documented a complete data analysis project
+- Structured and documented a complete data analysis project
