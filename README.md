@@ -84,25 +84,133 @@ Other Features:-
 - `Churned`
 
 ### Data Cleaning & Preprocessing
-<table> <thead> <tr> <th align="left">Column</th> <th align="center">Missing %</th> <th align="center">Imputation Strategy</th> <th align="left">Business Reasoning</th> </tr> </thead> <tbody> <tr> <td><strong>Session_Duration_Avg</strong></td> <td align="center">~</td> <td align="center">Median</td> <td>Likely tracking issue; median preserves distribution</td> </tr> <tr> <td><strong>Pages_Per_Session</strong></td> <td align="center">6%</td> <td align="center">Median</td> <td>True missing values; avoids skew from extreme values</td> </tr> <tr> <td><strong>Wishlist_Items</strong></td> <td align="center">~</td> <td align="center">Median</td> <td>0 represents valid behavior; missing treated separately</td> </tr> <tr> <td><strong>Social_Media_Engagement_Score</strong></td> <td align="center">12%</td> <td align="center">Median + Missing Indicator</td> <td>0 is valid; missing not clearly behavioral</td> </tr> <tr> <td><strong>Mobile_App_Usage</strong></td> <td align="center">10%</td> <td align="center">Replaced with 0</td> <td>Likely web-only users; 0 = no app usage</td> </tr> <tr> <td><strong>Credit_Balance</strong></td> <td align="center">11%</td> <td align="center">Replaced with 0</td> <td>0 represents no available credit</td> </tr> <tr> <td><strong>Days_Since_Last_Purchase</strong></td> <td align="center">~</td> <td align="center">Median</td> <td>Data inconsistency despite purchase activity</td> </tr> <tr> <td><strong>Email_Open_Rate</strong></td> <td align="center">5%</td> <td align="center">Median</td> <td>Likely email tracking gaps</td> </tr> </tbody> </table>
+<table>
+<thead>
+<tr>
+<th align="left">Column</th>
+<th align="center">Missing Values</th>
+<th align="center">Imputation / Cleaning Strategy</th>
+<th align="left">Business Reasoning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Age</strong></td>
+<td align="center">513</td>
+<td align="center">Replaced with Median</td>
+<td>Age is demographic; median prevents distortion from extreme values</td>
+</tr>
+<tr>
+<td><strong>Age_Group</strong></td>
+<td align="center">-</td>
+<td align="center">Derived Feature</td>
+<td>Categorised to evaluate churn trends across age segments</td>
+</tr>
+<tr>
+<td><strong>Session_Duration_Avg</strong></td>
+<td align="center">687</td>
+<td align="center">Replaced with Median</td>
+<td>Likely tracking inconsistencies; median preserves behavioral distribution</td>
+</tr>
+<tr>
+<td><strong>Pages_Per_Session</strong></td>
+<td align="center">605</td>
+<td align="center">Replaced with Median</td>
+<td>Avoids skew caused by outlier browsing behaviour</td>
+</tr>
+<tr>
+<td><strong>Wishlist_Items</strong></td>
+<td align="center">786</td>
+<td align="center">Replaced with 0</td>
+<td>0 represents valid absence of wishlist activity</td>
+</tr>
+<tr>
+<td><strong>Total_Purchases</strong></td>
+<td align="center">0</td>
+<td align="center">Corrected Negative Values; Removed Zero Purchase Rows</td>
+<td>Negative purchases are invalid; zero purchase users removed for behavioral consistency</td>
+</tr>
+<tr>
+<td><strong>Days_Since_Last_Purchase</strong></td>
+<td align="center">575</td>
+<td align="center">Replaced with Median</td>
+<td>Missing despite purchase activity indicates logging inconsistency</td>
+</tr>
+<tr>
+<td><strong>Discount_Usage_Rate</strong></td>
+<td align="center">713</td>
+<td align="center">Replaced with 0</td>
+<td>0 implies no discount usage behaviour</td>
+</tr>
+<tr>
+<td><strong>Returns_Rate</strong></td>
+<td align="center">907</td>
+<td align="center">Replaced with 0</td>
+<td>Missing likely implies no returns recorded</td>
+</tr>
+<tr>
+<td><strong>Email_Open_Rate</strong></td>
+<td align="center">540</td>
+<td align="center">Replaced with Median</td>
+<td>Email tracking gaps; median maintains distribution</td>
+</tr>
+<tr>
+<td><strong>Customer_Service_Calls</strong></td>
+<td align="center">33</td>
+<td align="center">Replaced with Median</td>
+<td>Ensures minimal impact on customer support interaction analysis</td>
+</tr>
+<tr>
+<td><strong>Product_Reviews_Written</strong></td>
+<td align="center">701</td>
+<td align="center">Replaced with Median</td>
+<td>Missing values not necessarily behavioural absence</td>
+</tr>
+<tr>
+<td><strong>Social_Media_Engagement_Score</strong></td>
+<td align="center">1175</td>
+<td align="center">Median + Derived Indicator</td>
+<td>Created additional column to assess churn sensitivity to engagement</td>
+</tr>
+<tr>
+<td><strong>Mobile_App_Usage</strong></td>
+<td align="center">997</td>
+<td align="center">Dropped Column</td>
+<td>Highly correlated with Average Order Value = 0 for non-users; low analytical relevance</td>
+</tr>
+<tr>
+<td><strong>Payment_Method_Diversity</strong></td>
+<td align="center">492</td>
+<td align="center">Replaced with Median</td>
+<td>Prevents distortion in payment behaviour patterns</td>
+</tr>
+<tr>
+<td><strong>Credit_Balance</strong></td>
+<td align="center">1107</td>
+<td align="center">Replaced with 0</td>
+<td>0 represents absence of available credit</td>
+</tr>
+</tbody>
+</table>
+
 
 Several columns contained missing values. Instead of applying a single blanket method, each column was handled based on business meaning.
+* **Session_Duration_Avg** – Missing values were likely due to tracking inconsistencies (other engagement metrics were available). Replaced using median imputation to preserve the original behavioral distribution.
 
-- **Session_Duration_Avg** - Missing values were likely due to tracking issues (other engagement fields were filled). Replaced using median imputation to preserve distribution.
+* **Pages_Per_Session** – Approximately 605 missing values observed. Replaced using median to avoid skew from extreme browsing behaviour.
 
-- **Pages_Per_Session** - Approximately 6% missing. Replaced using median.
+* **Wishlist_Items** – Contained valid 0 values representing absence of wishlist activity. Missing values were replaced with 0 to maintain behavioral consistency.
 
-- **Wishlist_Items** -Contained valid 0 values along with missing entries. Missing values replaced using median, since 0 represents real behavior.
+* **Social_Media_Engagement_Score** – 1175 missing values identified. Replaced using median imputation. Additionally, a derived indicator column was created to evaluate the impact of social media engagement on churn behaviour.
 
-- **Social_Media_Engagement_Score** -12% missing. Used median imputation. Considered creating a missing indicator variable since 0 is a valid score.
+* **Mobile_App_Usage** – 997 missing values observed. Due to its strong association with zero Average_Order_Value among non-users and limited analytical relevance, the column was dropped from further analysis.
 
-- **Mobile_App_Usage** - 10% missing. Replaced missing values with 0 (likely web-only users).
+* **Credit_Balance** – 1107 missing values present. Replaced missing values with 0, assuming absence of available credit.
 
-- **Credit_Balance** -11% missing. Replaced missing values with 0 (0 = no available credit).
+* **Days_Since_Last_Purchase** – Missing values occurred despite recorded purchase activity. Treated as data inconsistency and replaced using median.
 
-- **Days_Since_Last_Purchase** - Missing values occurred despite recorded purchase activity. Treated as data inconsistency and replaced using median.
+* **Email_Open_Rate** – 540 missing values identified. Replaced using median to address potential email tracking gaps.
 
-- **Email_Open_Rate** -5% missing. Replaced using median (likely tracking gaps).
 
 ### Exploratory Data Analysis (EDA)
 
